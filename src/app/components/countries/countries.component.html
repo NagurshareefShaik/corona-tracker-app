@@ -4,9 +4,12 @@
     <div class="mx-auto">
         <div class="form-group col-lg-5 mx-auto">
         <label for="c">Select Country</label>
-        <select name="" class="form-control" id="c">
-            <option value="con" *ngFor='let con of countries'>{{con}}</option>
+        <select name="" class="form-control" id="c" #input (change)='updateValues(input.value)'>
+            <option value="{{con}}" *ngFor='let con of countries'>{{con}}</option>
         </select>
         </div>
     </div>
+    <app-dashboard-card [totalConfirmed]='totalConfirmed' [totalRecovered]='totalRecovered' 
+  [totalDeaths]='totalDeaths' [totalActive]='totalActive' ></app-dashboard-card>
   </div>
+  

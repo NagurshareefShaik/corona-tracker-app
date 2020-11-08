@@ -1,46 +1,43 @@
 <div class="jumbotron bg-white text-center">
     <h1 class="display-4">Corona Covid-19 Tracker</h1>
     <hr>
+    <app-dashboard-card [totalConfirmed]='totalConfirmed' [totalRecovered]='totalRecovered' 
+    [totalDeaths]='totalDeaths' [totalActive]='totalActive' ></app-dashboard-card>
+  </div>
+  <hr>
+  <div class="ui form">
+    <div class="inline fields">
+      <label for="fruit">Select case Type:</label>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="caseType" id="c" #c (click)='updateChart(c)' value="c" checked="" tabindex="0" class="hidden">
+          <label for="c">Confirmed</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="caseType" id="r" #r (click)='updateChart(r)' value="r" tabindex="0" class="hidden">
+          <label for="r">Recovered</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="caseType" id="d" #d (click)='updateChart(d)' value="d" tabindex="0" class="hidden">
+          <label for="d">Deaths</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="caseType" id="a" #a (click)='updateChart(a)' value="a"  tabindex="0" class="hidden">
+          <label for="a">Active</label>
+        </div>
+      </div>
+    </div>
     <div class="row">
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                <h3>Confirmed</h3>
-                </div>
-                <div class="value">
-                    {{totalConfirmed}}
-                </div>
-              </div>
+        <div class="col">
+            <google-chart [data]="columnChart"></google-chart>
         </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                  <h3>Recovered</h3>
-                </div>
-                <div class="value">
-                    {{totalRecovered}}
-                </div>
-              </div>
-        </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                  <h3>Deaths</h3>
-                </div>
-                <div class="value">
-                  {{totalDeaths}}
-                </div>
-              </div>
-        </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                  <h3>Active</h3>
-                </div>
-                <div class="value">
-                  {{totalActive}}
-                </div>
-              </div>
+        <div class="col">
+            <google-chart [data]="pieChart"></google-chart>
         </div>
     </div>
-  </div>
