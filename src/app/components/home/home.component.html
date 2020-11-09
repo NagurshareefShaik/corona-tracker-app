@@ -35,9 +35,9 @@
     </div>
     <div class="row">
         <div class="col">
-            <google-chart [data]="columnChart"></google-chart>
+            <google-chart [title]="chartTitle" style="width: 100%" [height]='chart.height' [type]="chart.ColumnChart" [data]='dataTable' [options]="chart.options"></google-chart>
         </div>
         <div class="col">
-            <google-chart [data]="pieChart"></google-chart>
+            <google-chart [title]="chartTitle" style="width: 100%" [height]='chart.height' [type]="chart.PieChart" [data]='dataTable' [options]="chart.options"></google-chart>
         </div>
     </div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from 'src/app/service/data-service.service';
-import { GoogleChartInterface } from 'ng2-google-charts';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 
 @Component({
@@ -14,54 +13,60 @@ export class HomeComponent implements OnInit {
   totalActive=0;
   totalDeaths=0;
   totalRecovered=0;
-  pieChart: GoogleChartInterface={
-    chartType: 'PieChart'
-  };
-  columnChart: GoogleChartInterface={
-    chartType: 'ColumnChart'
-  };
+  dataTable=[];
+  chartTitle='';
+
+  chart ={
+    PieChart:"PieChart",
+    ColumnChart:'ColumnChart',
+    height:400,
+    options: {
+      animtion:{
+        duration:1000,
+        easing:'out',
+      },
+      is3D:true
+    }
+  }
+  
   constructor(private dataService:DataServiceService) { }
 
 initChart(caseType:string){
-  let dataTable=[];
-  dataTable.push(["Country","Cases"])
+  this.dataTable=[];
+  // this.dataTable.push(["Country","Cases"])
   this.globalData.forEach(cs=>{
     let value:number;
       if(caseType == 'a'){
-        value=cs.active
+        value=cs.active;
+        this.chartTitle='Active  Cases';
       }
       if(caseType == 'c'){
-        value=cs.confirmed
+        value=cs.confirmed;
+        this.chartTitle='Confirmed Cases';
       }
       if(caseType == 'r'){
-        value=cs.recovered
+        value=cs.recovered;
+        this.chartTitle='Recovered Cases';
       }
       if(caseType == 'd'){
-        value=cs.deaths
+        value=cs.deaths;
+        this.chartTitle='Deaths Cases';
       }
-    dataTable.push([cs.country,value])
+    this.dataTable.push([cs.country,value])
   })
-  console.log(dataTable);
+  console.log(this.dataTable);
   
-  this.pieChart= {
-    chartType: 'PieChart',
-    dataTable: dataTable,
-    //firstRowIsData: true,
-    options: {
-      height:400
-    },
-  };
-  this.columnChart= {
-    chartType: 'ColumnChart',
-    dataTable: dataTable,
-    //firstRowIsData: true,
-    options: {
-      height:400
-    },
-  };
+  
 }
 
   ngOnInit(): void {
+    this.dataService.getDateWiseData().subscribe(
+      (result)=>{
+        console.log(result);
+        
+      }
+    )
+
     this.dataService.getGlobalData().subscribe({
       next :(result)=>{
         this.globalData=result;

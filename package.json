@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~10.2.0",
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
-    "ng2-google-charts": "^6.1.0",
+    "angular-google-charts": "^1.1.6",
     "ng2-radio-group": "0.0.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
