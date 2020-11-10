@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import {map} from 'rxjs/operators';
 import { DateWiseData } from '../models/data-wise-data';
 import { GlobalDataSummary } from '../models/global-data';
+import {formatDate} from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
 export class DataServiceService {
-private globalDataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-09-2020.csv";
+private globalDataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 private dateWiseDataUrl="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
   
 constructor(private http:HttpClient) { }
@@ -40,7 +41,11 @@ constructor(private http:HttpClient) { }
   }
 
   getGlobalData(){
-    return this.http.get(this.globalDataUrl,{responseType:'text'}).pipe(
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() -1);
+    let beforeDayFormatter=formatDate(currentDate, 'MM-dd-yyyy', 'en');
+    let dataUrl=this.globalDataUrl+beforeDayFormatter+".csv";
+    return this.http.get(dataUrl,{responseType:'text'}).pipe(
       map(result=>{
         let data:GlobalDataSummary[]=[];
         let raw ={};
