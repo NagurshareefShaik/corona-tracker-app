@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { DateWiseData } from 'src/app/models/data-wise-data';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServiceService } from 'src/app/service/data-service.service';
 
@@ -13,12 +14,21 @@ export class CountriesComponent implements OnInit {
   totalActive=0;
   totalDeaths=0;
   totalRecovered=0;
-countries:string[]=[];
-data :GlobalDataSummary[];
-  constructor(private dtaService:DataServiceService) { }
+  countries:string[]=[];
+  dataTable;
+  data :GlobalDataSummary[];
+  selectedCountDateWise:DateWiseData[];
+  dateWiseData;
+  loading=false;
+  constructor(private dataService:DataServiceService) { }
 
   ngOnInit(): void {
-    this.dtaService.getGlobalData().subscribe(result=>{
+    this.dataService.getDateWiseData().subscribe(
+      (result)=>{
+        this.dateWiseData=result;
+      }
+    )
+    this.dataService.getGlobalData().subscribe(result=>{
       this.data=result;
       this.data.forEach(cs=>{
         if(!Number.isNaN(cs.confirmed)){
@@ -27,6 +37,14 @@ data :GlobalDataSummary[];
       })
       this.updateValues(this.data[0]['country'])
     })
+  }
+
+  updateChart(){
+      this.dataTable=[];
+      // this.dataTable.push(['Cases','Date'])
+      this.selectedCountDateWise.forEach(cs=>{
+        this.dataTable.push([cs.cases,cs.date])
+      })
   }
 
   updateValues(country){
@@ -38,6 +56,8 @@ data :GlobalDataSummary[];
           this.totalActive=cs.active;
         }
       })
+      this.selectedCountDateWise =this.dateWiseData[country]
+      this.updateChart();
   }
 
 }

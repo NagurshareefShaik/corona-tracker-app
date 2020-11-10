@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   totalRecovered=0;
   dataTable=[];
   chartTitle='';
-
+  loading=true;
   chart ={
     PieChart:"PieChart",
     ColumnChart:'ColumnChart',
@@ -50,7 +50,7 @@ initChart(caseType:string){
       }
       if(caseType == 'd'){
         value=cs.deaths;
-        this.chartTitle='Deaths Cases';
+        this.chartTitle='Deaths';
       }
     this.dataTable.push([cs.country,value])
   })
@@ -60,13 +60,6 @@ initChart(caseType:string){
 }
 
   ngOnInit(): void {
-    this.dataService.getDateWiseData().subscribe(
-      (result)=>{
-        console.log(result);
-        
-      }
-    )
-
     this.dataService.getGlobalData().subscribe({
       next :(result)=>{
         this.globalData=result;
@@ -79,6 +72,9 @@ initChart(caseType:string){
         }
         })
         this.initChart('c');
+      },
+      complete:()=>{
+        this.loading=false;
       }
     })
   }

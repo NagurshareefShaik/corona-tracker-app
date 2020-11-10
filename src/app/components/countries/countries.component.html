@@ -1,4 +1,8 @@
-<div class="jumbotron bg-white text-center">
+  <div class="ui inverted dimmer" [class.active]='loading'>
+    <div class="ui text loader">Loading</div>
+  </div>
+  <p></p>
+<div class="jumbotron bg-white text-center p-0 m-0">
     <h1 class="display-4">Corona Covid-19 Tracker Country Wise</h1>
     <hr>
     <div class="mx-auto">
@@ -12,20 +16,27 @@
     <app-dashboard-card [totalConfirmed]='totalConfirmed' [totalRecovered]='totalRecovered' 
   [totalDeaths]='totalDeaths' [totalActive]='totalActive' ></app-dashboard-card>
   </div>
-    <table class="table table-striped">
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Sno.</th>
+            <th scope="col">Date</th>
+            <th scope="col">Cases</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+          <tr *ngFor="let cs of selectedCountDateWise;index as i">
+            <td>{{i+1}}</td>
+            <td>{{cs.cases}}</td>
+            <td>{{cs.date|date}}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="col">
+        <google-chart title="Confirmed" style="width: 100%" height='400' type="LineChart" [data]='dataTable'></google-chart>
+    </div>
+</div>
   

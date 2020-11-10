@@ -1,4 +1,8 @@
-<div class="jumbotron bg-white text-center">
+  <div class="ui inverted dimmer" [class.active]='loading'>
+    <div class="ui text loader">Loading</div>
+  </div>
+  <p></p>
+<div class="jumbotron bg-white text-center p-0 m-0">
     <h1 class="display-4">Corona Covid-19 Tracker</h1>
     <hr>
     <app-dashboard-card [totalConfirmed]='totalConfirmed' [totalRecovered]='totalRecovered' 
