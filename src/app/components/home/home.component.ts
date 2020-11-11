@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from 'src/app/service/data-service.service';
 import { GlobalDataSummary } from 'src/app/models/global-data';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -60,7 +61,23 @@ initChart(caseType:string){
 }
 
   ngOnInit(): void {
-    this.dataService.getGlobalData().subscribe({
+    this.getGlobalDataForTrack(this.getCurrentDate(1));
+  }
+
+  updateChart(input:HTMLInputElement){
+    let caseType:string=input.value;
+    this.initChart(caseType);
+  }
+
+  getCurrentDate(day:number){
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() -day);
+    let beforeDayFormatter=formatDate(currentDate, 'MM-dd-yyyy', 'en');
+    return beforeDayFormatter;
+  }
+
+  getGlobalDataForTrack(beforeDayFormatter){
+    this.dataService.getGlobalData(beforeDayFormatter).subscribe({
       next :(result)=>{
         this.globalData=result;
         result.forEach(cs => {
@@ -73,14 +90,13 @@ initChart(caseType:string){
         })
         this.initChart('c');
       },
+      error:()=>{
+        this.getGlobalDataForTrack(this.getCurrentDate(2));
+      },
       complete:()=>{
         this.loading=false;
       }
     })
-  }
-
-  updateChart(input:HTMLInputElement){
-    let caseType:string=input.value;
-    this.initChart(caseType);
+    
   }
 }

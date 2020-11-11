@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { DateWiseData } from 'src/app/models/data-wise-data';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServiceService } from 'src/app/service/data-service.service';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-countries',
@@ -28,7 +29,18 @@ export class CountriesComponent implements OnInit {
         this.dateWiseData=result;
       }
     )
-    this.dataService.getGlobalData().subscribe(result=>{
+    this.getGlobalDataForTrack(this.getCurrentDate(1));
+  }
+
+  getCurrentDate(day:number){
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() -day);
+    let beforeDayFormatter=formatDate(currentDate, 'MM-dd-yyyy', 'en');
+    return beforeDayFormatter;
+  }
+
+  getGlobalDataForTrack(beforeDayFormatter){
+    this.dataService.getGlobalData(beforeDayFormatter).subscribe(result=>{
       this.data=result;
       this.data.forEach(cs=>{
         if(!Number.isNaN(cs.confirmed)){
@@ -36,6 +48,9 @@ export class CountriesComponent implements OnInit {
         }
       })
       this.updateValues(this.data[0]['country'])
+    },
+    error=>{
+      this.getGlobalDataForTrack(this.getCurrentDate(2));
     })
   }
 

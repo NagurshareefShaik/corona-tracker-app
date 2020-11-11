@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import {map} from 'rxjs/operators';
 import { DateWiseData } from '../models/data-wise-data';
 import { GlobalDataSummary } from '../models/global-data';
-import {formatDate} from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,10 +39,7 @@ constructor(private http:HttpClient) { }
     )
   }
 
-  getGlobalData(){
-    let currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() -1);
-    let beforeDayFormatter=formatDate(currentDate, 'MM-dd-yyyy', 'en');
+  getGlobalData(beforeDayFormatter:string){
     let dataUrl=this.globalDataUrl+beforeDayFormatter+".csv";
     return this.http.get(dataUrl,{responseType:'text'}).pipe(
       map(result=>{
@@ -53,7 +49,6 @@ constructor(private http:HttpClient) { }
         rows.splice(0,1);
         rows.forEach(row=>{
           let cols=row.split(/,(?=\S)/);
-
           let cs={
             country:cols[3],
             confirmed:+cols[7],
