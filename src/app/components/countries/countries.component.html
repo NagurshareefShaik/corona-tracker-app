@@ -18,6 +18,11 @@
   </div>
   <div class="row">
     <div class="col">
+      <google-chart title="Total Cases" style="width: 100%" [height]='chart.height' [type]="chart.PieChart" 
+      [data]='dataTableForAll' [options]="chart.options"></google-chart>
+      <google-chart title="Confirmed" style="width: 100%" height='400' type="LineChart" [data]='dataTable'></google-chart>
+    </div>
+    <div class="col">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -29,14 +34,11 @@
         <tbody>
           <tr *ngFor="let cs of selectedCountDateWise;index as i">
             <td>{{i+1}}</td>
-            <td>{{cs.cases}}</td>
             <td>{{cs.date|date}}</td>
+            <td>{{cs.cases}}</td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="col">
-        <google-chart title="Confirmed" style="width: 100%" height='400' type="LineChart" [data]='dataTable'></google-chart>
     </div>
 </div>
   

@@ -17,10 +17,23 @@ export class CountriesComponent implements OnInit {
   totalRecovered=0;
   countries:string[]=[];
   dataTable;
+  dataTableForAll;
   data :GlobalDataSummary[];
   selectedCountDateWise:DateWiseData[];
   dateWiseData;
   loading=false;
+  chart ={
+    PieChart:"PieChart",
+    height:400,
+    options: {
+      animtion:{
+        duration:1000,
+        easing:'out',
+      },
+      is3D:true
+    }
+  }
+
   constructor(private dataService:DataServiceService) { }
 
   ngOnInit(): void {
@@ -47,7 +60,8 @@ export class CountriesComponent implements OnInit {
         this.countries.push(cs.country);
         }
       })
-      this.updateValues(this.data[0]['country'])
+      this.updateValues(this.data[0]['country']);
+      this.initChart(this.data[0]['country']);
     },
     error=>{
       this.getGlobalDataForTrack(this.getCurrentDate(2));
@@ -73,6 +87,18 @@ export class CountriesComponent implements OnInit {
       })
       this.selectedCountDateWise =this.dateWiseData[country]
       this.updateChart();
+      this.initChart(country);
   }
-
+  initChart(country:string){
+    this.dataTableForAll=[];
+    // this.dataTable.push(["Country","Cases"])
+    this.data.forEach(cs=>{
+      if(cs.country==country){
+        this.dataTableForAll.push(['Confirmed',cs.confirmed]);
+        this.dataTableForAll.push(['Recovered',cs.recovered]);
+        this.dataTableForAll.push(['Active',cs.active]);
+        this.dataTableForAll.push(['Death',cs.deaths]);
+      }
+    })
+  }
 }

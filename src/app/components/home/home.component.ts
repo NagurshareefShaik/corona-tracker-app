@@ -55,9 +55,6 @@ initChart(caseType:string){
       }
     this.dataTable.push([cs.country,value])
   })
-  console.log(this.dataTable);
-  
-  
 }
 
   ngOnInit(): void {
