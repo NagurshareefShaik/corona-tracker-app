@@ -37,11 +37,22 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row p-0 m-0">
+      <div class="col">
+            <google-chart [title]="chartTitle" style="width: 100%" [height]='chart.height' [type]="chart.PieChart" [data]='dataTable' [options]="chart.options"></google-chart>
+      </div>
         <div class="col">
             <google-chart [title]="chartTitle" style="width: 100%" [height]='chart.height' [type]="chart.ColumnChart" [data]='dataTable' [options]="chart.options"></google-chart>
         </div>
-        <div class="col">
-            <google-chart [title]="chartTitle" style="width: 100%" [height]='chart.height' [type]="chart.PieChart" [data]='dataTable' [options]="chart.options"></google-chart>
-        </div>
     </div>
+      <!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
