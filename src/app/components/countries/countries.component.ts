@@ -21,7 +21,7 @@ export class CountriesComponent implements OnInit {
   data :GlobalDataSummary[];
   selectedCountDateWise:DateWiseData[];
   dateWiseData;
-  loading=false;
+  loading=true;
   chart ={
     PieChart:"PieChart",
     height:400,
@@ -37,11 +37,11 @@ export class CountriesComponent implements OnInit {
   constructor(private dataService:DataServiceService) { }
 
   ngOnInit(): void {
-    this.dataService.getDateWiseData().subscribe(
-      (result)=>{
+    this.dataService.getDateWiseData().subscribe({
+      next :(result)=>{
         this.dateWiseData=result;
       }
-    )
+  })
     this.getGlobalDataForTrack(this.getCurrentDate(1));
   }
 
@@ -53,7 +53,8 @@ export class CountriesComponent implements OnInit {
   }
 
   getGlobalDataForTrack(beforeDayFormatter){
-    this.dataService.getGlobalData(beforeDayFormatter).subscribe(result=>{
+    this.dataService.getGlobalData(beforeDayFormatter).subscribe({
+      next:(result)=>{
       this.data=result;
       this.data.forEach(cs=>{
         if(!Number.isNaN(cs.confirmed)){
@@ -63,9 +64,13 @@ export class CountriesComponent implements OnInit {
       this.updateValues(this.data[0]['country']);
       this.initChart(this.data[0]['country']);
     },
-    error=>{
+    error:()=>{
       this.getGlobalDataForTrack(this.getCurrentDate(2));
-    })
+    },
+    complete:()=>{
+      this.loading=false;
+    }
+  })
   }
 
   updateChart(){
