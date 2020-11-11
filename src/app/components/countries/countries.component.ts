@@ -40,9 +40,11 @@ export class CountriesComponent implements OnInit {
     this.dataService.getDateWiseData().subscribe({
       next :(result)=>{
         this.dateWiseData=result;
+      },complete:()=>{
+        this.getGlobalDataForTrack(this.getCurrentDate(1));
       }
   })
-    this.getGlobalDataForTrack(this.getCurrentDate(1));
+    
   }
 
   getCurrentDate(day:number){
@@ -61,13 +63,13 @@ export class CountriesComponent implements OnInit {
         this.countries.push(cs.country);
         }
       })
-      this.updateValues(this.data[0]['country']);
-      this.initChart(this.data[0]['country']);
     },
     error:()=>{
       this.getGlobalDataForTrack(this.getCurrentDate(2));
     },
     complete:()=>{
+      this.updateValues(this.data[0]['country']);
+      this.initChart(this.data[0]['country']);
       this.loading=false;
     }
   })
