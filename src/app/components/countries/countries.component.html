@@ -17,12 +17,12 @@
   [totalDeaths]='totalDeaths' [totalActive]='totalActive' ></app-dashboard-card>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-sm">
       <google-chart title="Total Cases" style="width: 100%" [height]='chart.height' [type]="chart.PieChart" 
       [data]='dataTableForAll' [options]="chart.options"></google-chart>
       <google-chart title="Confirmed" style="width: 100%" height='400' type="LineChart" [data]='dataTable'></google-chart>
     </div>
-    <div class="col">
+    <div class="col-sm">
       <table class="table table-striped">
         <thead>
           <tr>
