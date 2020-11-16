@@ -40,10 +40,10 @@
     <div class="container">
       <div class="row">
       <div class="col-sm">
-            <google-chart [title]="chartTitle" style="width: 100%"  [type]="chart.PieChart" [data]='dataTable' [options]="chart.options"></google-chart>
+            <google-chart [title]="chartTitle" [height]='chart.height' style="width: 100%"  [type]="chart.PieChart" [data]='dataTable' [options]="chart.options"></google-chart>
       </div>
         <div class="col-sm">
-            <google-chart [title]="chartTitle" style="width: 100%"  [type]="chart.ColumnChart" [data]='dataTable' [options]="chart.options"></google-chart>
+            <google-chart [title]="chartTitle" [height]='chart.height' style="width: 100%"  [type]="chart.ColumnChart" [data]='dataTable' [options]="chart.options"></google-chart>
         </div>
       </div>
     </div>
