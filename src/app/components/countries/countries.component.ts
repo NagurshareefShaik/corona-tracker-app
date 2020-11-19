@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { DateWiseData } from 'src/app/models/data-wise-data';
 import { GlobalDataSummary } from 'src/app/models/global-data';
 import { DataServiceService } from 'src/app/service/data-service.service';
-import {formatDate} from '@angular/common';
+import {DOCUMENT, formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-countries',
@@ -33,8 +33,26 @@ export class CountriesComponent implements OnInit {
       is3D:true
     }
   }
-
-  constructor(private dataService:DataServiceService) { }
+  windowScrolled: boolean;
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+      if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+          this.windowScrolled = true;
+      } 
+     else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+          this.windowScrolled = false;
+      }
+  }
+  scrollToTop() {
+      (function smoothscroll() {
+          var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+          if (currentScroll > 0) {
+              window.requestAnimationFrame(smoothscroll);
+              window.scrollTo(0, currentScroll - (currentScroll / 8));
+          }
+      })();
+  }
+  constructor(@Inject(DOCUMENT) private document: Document,private dataService:DataServiceService) { }
 
   ngOnInit(): void {
     this.dataService.getDateWiseData().subscribe({
