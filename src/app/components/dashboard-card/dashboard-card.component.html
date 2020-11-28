@@ -1,26 +1,33 @@
 <div class="row p-2 m-2">
     <div class="col p-3">
-          <button type="button" class="btn btn-lg btn-warning">
-            Confirmed <span class="badge badge-light">{{totalConfirmed}}</span>
-            <span class="sr-only">unread messages</span>
-          </button>
+      <div class="card text-center bg-warning text-white">
+        <div class="card-body">
+          <h5 class="card-title">Confirmed</h5>
+          <p class="card-text">{{totalConfirmed}}</p>
+        </div>
+    </div>
     </div>
     <div class="col p-3">
-      <button type="button" class="btn btn-lg btn-success">
-        Recovered <span class="badge badge-light">{{totalRecovered}}</span>
-        <span class="sr-only">unread messages</span>
-      </button>
+    <div class="card text-center bg-success text-white">
+                  <div class="card-body">
+                    <h5 class="card-title">Recovered</h5>
+                    <p class="card-text">{{totalRecovered}}</p>
+                  </div>
+    </div>
     </div>
     <div class="col p-3">
-          <button type="button" class="btn btn-lg btn-danger">
-            Deaths <span class="badge badge-light">{{totalDeaths}}</span>
-            <span class="sr-only">unread messages</span>
-          </button>
+      <div class="card text-center bg-danger text-white">
+        <div class="card-body">
+          <h5 class="card-title">Deaths</h5>
+          <p class="card-text">{{totalDeaths}}</p>
+        </div>
+</div>
     </div>
     <div class="col p-3">
-          <button type="button" class="btn btn-lg btn-primary">
-            Active <span class="badge badge-light">{{totalActive}}</span>
-            <span class="sr-only">unread messages</span>
-          </button>
+      <div class="card text-center bg-primary text-white">
+        <div class="card-body">
+          <h5 class="card-title">Active</h5>
+          <p class="card-text">{{totalActive}}</p>
+        </div>
     </div>
 </div>

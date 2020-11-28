@@ -95,9 +95,9 @@ export class CountriesComponent implements OnInit {
 
   updateChart(){
       this.dataTable=[];
-      // this.dataTable.push(['Cases','Date'])
+      // this.dataTable.push(["Cases","Date"])
       this.selectedCountDateWise.forEach(cs=>{
-        this.dataTable.push([cs.cases,cs.date])
+        this.dataTable.push([cs.date,cs.cases])
       })
   }
 
@@ -119,7 +119,6 @@ export class CountriesComponent implements OnInit {
     // this.dataTable.push(["Country","Cases"])
     this.data.forEach(cs=>{
       if(cs.country==country){
-        // this.dataTableForAll.push(['Confirmed',cs.confirmed]);
         this.dataTableForAll.push(['Recovered',cs.recovered]);
         this.dataTableForAll.push(['Active',cs.active]);
         this.dataTableForAll.push(['Death',cs.deaths]);
